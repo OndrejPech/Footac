@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Přihlášení{%  endblock %}
+
+{%  block content %}
+    <br>
+    <h2 class="text-center"> Přihlášení</h2>
+    <br>
+
+    <div  class="col-md-6 offset-md-3">
+    <form  method="POST" action="{% url 'accounts:login_user' %}">
+        {% csrf_token %}
+      <div class="mb-3">
+        <input type="text" class="form-control" placeholder="Uživatelské jméno" name="username">
+      </div>
+      <div class="mb-3">
+        <input type="password" class="form-control" placeholder="Heslo" name="password">
+      </div>
+      <div class="from-text mb-3">
+          <p>Nemáte účet? Vytvořte si ho <a href="{% url 'accounts:register' %}">zde</a>.</p>
+      </div>
+      <button type="submit" class="btn btn-secondary">Přihlásit se</button>
+    </form>
+    </div>
+
+{% endblock %}

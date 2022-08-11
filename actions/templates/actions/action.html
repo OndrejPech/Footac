@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{%  load custom_tags %}
+
+{% block title %}{{ club}} akce{% endblock %}
+
+{% block content %}
+ <h3>Akce klubu {{ club}}</h3>
+    <br>
+    <div class="container">
+    <div class="table-responsive-md">
+    <table class="table table-bordered table-hover">
+        <thead class="table-light">
+        <tr>
+            <th>sleduj</th>
+            <th>zápas</th>
+            <th>čas</th>
+            <th>typ</th>
+            <th>podtyp</th>
+            <th>bráníci tým</th>
+            <th>hráč</th>
+            <th>pas. hráč</th>
+            <th>pozice</th>
+        </tr>
+        </thead>
+        {% for action in actions %}
+        <tr>
+            <td>
+                {% if action.game.link_1 %}
+                    {% start_end_video action.game.link_1 action.video_time action.type.name as link1 %}
+                    <a href ="{{ link1 }}">Ytb</a>
+                {% endif %}
+{#            # TODO for Vimeo and Other link function tag can be different#}
+                {% if action.game.link_2 %}
+                    {% start_end_video action.game.link_2 action.video_time action.type.name as link2 %}
+                    <a href ="{{ link2}}">Vim</a>
+                {% endif %}
+                {% if action.game.link_2 %}
+                    {% start_end_video action.game.link_3 action.video_time action.type.name as link3 %}
+                    <a href ="{{ link3 }}">Oth</a>
+                {% endif %}
+
+            </td>
+            <td>{{ action.team }}</td>
+            <td>{{ action.display_time }}</td>
+            <td>{{ action.type.name_cz }}</td>
+            <td>{% if action.subtype %}{{ action.subtype }}{% endif %}</td>
+            <td>{{ action.opp_team.abbrev }}</td>
+            <td>{% if action.active_player %}{{ action.active_player}}{% endif %}</td>
+            <td>{% if action.start_x and action.start_y%}{{action.start_x}},{{action.start_y}}{% endif %}</td>
+            <td>{% if action.passive_player %}{{ action.passive_player}}{% endif %}</td>
+            <td>{% start_end_video action.game.link_1 action.video_time action.type.name as link1 %}{{ link1 }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    </div>
+    </div>
+<br>
+
+    t=2m30s
+
+{% endblock %}
