@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from actions.models import Club,Team, Player, League, Game, Action
+from .filters import ActionFilter
 from django.db.models import Q
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
@@ -34,9 +35,9 @@ def club_actions_view(request):
     teams = club.teams.all()
     id_s = [team.id for team in teams]  # all team_ids in club
     actions = Action.objects.filter(Q(team=id_s[2])| Q(opp_team=id_s[2])) # TODO
+    action_filter = ActionFilter(request.GET, queryset=actions)
 
-
-    content = {'actions': actions, 'club':club}
+    content = {'club': club, 'action_filter': action_filter}
     return render(request, template_name='actions/action.html',
                   context=content)
 

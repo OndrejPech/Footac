@@ -7,6 +7,7 @@ class Club(models.Model):
     abbrev = models.CharField(max_length=16)
     email = models.EmailField(default='', blank=True)
     address = models.CharField(max_length=256, default='', blank=True)
+    logo = models.ImageField(null=True, blank=True, upload_to="static/img/logos")
 
     def __str__(self):
         return self.name

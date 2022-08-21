@@ -22,7 +22,6 @@ urlpatterns = [
     path('my_club/actions/', club_actions_view, name='club_actions'),
 ]
 
-
 # conventions
 # list /cars/
 # create /cars/new/
