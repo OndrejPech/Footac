@@ -19,8 +19,12 @@
               class="rounded-circle img-fluid" style="width: 150px;">
               {% endif %}
             <h3 class="my-3">{{ club.name }}</h3>
+            {% if club.email %}
             <p class="text mb-1">{{ club.email}}</p>
+            {% endif %}
+            {% if club.address %}
             <p class="text-muted mb-4">{{ club.address }}</p>
+            {%  endif %}
           </div>
         </div>
 

@@ -5,8 +5,8 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 class Club(models.Model):
     name = models.CharField(max_length=128)
     abbrev = models.CharField(max_length=16)
-    email = models.EmailField(default='', blank=True)
-    address = models.CharField(max_length=256, default='', blank=True)
+    email = models.EmailField(null=True, blank=True,)
+    address = models.CharField(max_length=256, null=True, blank=True)
     logo = models.ImageField(null=True, blank=True, upload_to="static/img/logos")
 
     def __str__(self):
@@ -63,9 +63,9 @@ class Game(models.Model):
     season = models.ForeignKey(Season, null=True, on_delete=models.SET_NULL, related_name='season_games')
     league = models.ForeignKey(League, null=True, on_delete=models.SET_NULL, related_name='league_games')
     recorded = models.BooleanField(default=False)
-    link_1 = models.URLField(default='')
-    link_2 = models.URLField(default='')
-    link_3 = models.URLField(default='')
+    link_1 = models.URLField(null=True, blank=True)
+    link_2 = models.URLField(null=True, blank=True)
+    link_3 = models.URLField(null=True, blank=True)
 
     class Meta:
         ordering = ['-date']
