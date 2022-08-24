@@ -26,16 +26,18 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="#">Home</a>
         </li>
-          {% if user.is_authenticated %}
-        <li class="nav-item">
-          <a class="nav-link" href="{%  url 'actions:club_actions' %}">Akce</a>
-        </li>
-              {% if user.account.club.id %}
+        {% if user.is_authenticated %}
+          {% if user.account.club.id %}
         <li class="nav-item">
           <a class="nav-link" href="{%  url 'actions:club_detail' user.account.club.id %}">Klub</a>
         </li>
-              {% endif %}
-          {%  endif %}
+            {% for team in user.account.club.teams.all %}
+        <li class="nav-item">
+          <a class="nav-link" href="{%  url 'actions:team_actions' team.id %}">{{ team.squad }} tým</a>
+        </li>
+            {% endfor %}
+          {% endif %}
+        {% endif %}
       </ul>
     </div>
 

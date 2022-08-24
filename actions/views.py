@@ -25,37 +25,21 @@ def club_view(request, club_id):
 
 
 @login_required
-def club_actions_view(request):
+def team_actions_view(request, team_id):
     try:
         club = request.user.account.club
     except ObjectDoesNotExist:  # No club associated with user,
         return render(request, template_name='actions/no_club_account.html')
 
-    # TODO
-    teams = club.teams.all()
-    id_s = [team.id for team in teams]  # all team_ids in club
-    actions = Action.objects.filter(Q(team=id_s[2])| Q(opp_team=id_s[2])) # TODO
-    action_filter = ActionFilter(request.GET, queryset=actions)
+    club_teams_id = list(club.teams.all().values_list('id', flat=True))
+    if team_id not in club_teams_id:  # user is not allowed to see this team
+        return render(request, template_name='actions/restricted_access.html')
 
-    content = {'club': club, 'action_filter': action_filter}
-    return render(request, template_name='actions/action.html',
+    team = get_object_or_404(Team, id=team_id)
+
+    actions = Action.objects.filter(Q(team=team_id)| Q(opp_team=team_id))
+    action_filter = ActionFilter(request.GET, queryset=actions, team_id=team_id)
+
+    content = {'team': team, 'action_filter': action_filter}
+    return render(request, template_name='actions/team_actions.html',
                   context=content)
-
-
-# JUST FOR PRACTICE
-@login_required()
-def list_games_view(request):
-    club_id = request.user.account.club_id
-    club = get_object_or_404(Club, id=club_id)
-    teams = club.teams.all()
-
-    if request.method == 'POST':
-        content = {'club': club, 'teams': teams}
-        return render(request, template_name='actions/games.html', context=content)
-
-    team = teams[2]
-    games = Game.objects.filter(home_team=team.id)
-    content = {'club': club, 'teams': teams, 'team': team, 'games': games}
-    return render(request, template_name='actions/games.html', context=content)
-
-

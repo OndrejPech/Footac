@@ -5,7 +5,16 @@
 {% block title %}{{ club}} akce{% endblock %}
 
 {% block content %}
- <h3>Akce klubu {{ club}}</h3>
+ <h3>Akce týmu {{ team }}</h3>
+    <br>
+
+<div  class="col-md-11 offset-md-1">
+<form>
+{{ action_filter.form }}
+<button type="submit">Filter</button>
+</form>
+    </div>
+
     <br>
     <div class="container">
     <div class="table-responsive-md">
@@ -17,13 +26,13 @@
             <th>čas</th>
             <th>typ</th>
             <th>podtyp</th>
-            <th>bráníci tým</th>
+            <th>tým</th>
             <th>hráč</th>
             <th>pas. hráč</th>
             <th>pozice</th>
         </tr>
         </thead>
-        {% for action in actions %}
+        {% for action in action_filter.qs %}
         <tr>
             <td>
                 {% if action.game.link_1 %}
@@ -41,15 +50,15 @@
                 {% endif %}
 
             </td>
-            <td>{{ action.team }}</td>
+            <td>{{ action.game.home_team.abbrev}} vs. {{ action.game.away_team.abbrev}}</td>
             <td>{{ action.display_time }}</td>
             <td>{{ action.type.name_cz }}</td>
             <td>{% if action.subtype %}{{ action.subtype }}{% endif %}</td>
-            <td>{{ action.opp_team.abbrev }}</td>
+            <td>{{ action.team.abbrev }}</td>
             <td>{% if action.active_player %}{{ action.active_player}}{% endif %}</td>
             <td>{% if action.start_x and action.start_y%}{{action.start_x}},{{action.start_y}}{% endif %}</td>
             <td>{% if action.passive_player %}{{ action.passive_player}}{% endif %}</td>
-            <td>{% start_end_video action.game.link_1 action.video_time action.type.name as link1 %}{{ link1 }}</td>
+            <td>edit</td>
         </tr>
         {% endfor %}
     </table>
@@ -57,6 +66,5 @@
     </div>
 <br>
 
-    t=2m30s
 
 {% endblock %}
