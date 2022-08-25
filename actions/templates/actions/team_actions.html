@@ -5,7 +5,7 @@
 {% block title %}{{ club}} akce{% endblock %}
 
 {% block content %}
- <h3>Akce týmu {{ team }}</h3>
+ <h3 class="text-center">Akce týmu {{ team }}</h3>
     <br>
 
 <div  class="col-md-11 offset-md-1">
@@ -17,6 +17,11 @@
 
     <br>
     <div class="container">
+    {% if page_results %}
+        <small class="text-muted">Akce {{ page_results.start_index }} až {{ page_results.end_index }} z {{ page_results.paginator.count }}.</small>
+    {% else %}
+        <small class="text-muted">Žádné akce k zobrazení.</small>
+    {% endif %}
     <div class="table-responsive-md">
     <table class="table table-bordered table-hover">
         <thead class="table-light">
@@ -32,7 +37,7 @@
             <th>pozice</th>
         </tr>
         </thead>
-        {% for action in action_filter.qs %}
+        {% for action in page_results %}
         <tr>
             <td>
                 {% if action.game.link_1 %}
@@ -63,8 +68,33 @@
         {% endfor %}
     </table>
     </div>
+    {% if page_results.has_other_pages %}
+    <div class="btn-group" role="group" aria-label="Item pagination">
+        {% if page_results.has_previous %}
+            <a href="?page=1" class="btn btn-outline-secondary">|&laquo;</a>
+            <a href="?page={{ page_results.previous_page_number }}" class="btn btn-outline-secondary">&laquo;</a>
+        {% endif %}
+
+        {% for page_number in page_results.paginator.page_range %}
+            {% if page_results.number == page_number %}
+                <button class="btn btn-outline-secondary active">
+                    <span>{{ page_number }} <span class="sr-only"></span></span>
+                </button>
+            {% elif page_number|add:'4' >= page_results.number and page_number|add:'-6' <= page_results.number%}
+                <a href="?page={{ page_number }}" class="btn btn-outline-secondary">
+                    {{ page_number }}
+                </a>
+            {% endif %}
+        {% endfor %}
+
+        {% if page_results.has_next %}
+            <a href="?page={{ page_results.next_page_number }}" class="btn btn-outline-secondary">&raquo;</a>
+            <a href="?page={{ page_results.paginator.num_pages }}" class="btn btn-outline-secondary">&raquo;|</a>
+        {% endif %}
+
+    {% endif %}
     </div>
-<br>
+    </div>
 
 
 {% endblock %}
