@@ -107,6 +107,10 @@
                   {% for player in players %}
                     <tr>
                       <td >{{ player }}</td>
+                      <td>
+                      {% for team in player.teams.all %}
+                          {{ team.squad }},
+                          {% endfor %}</td>
                     </tr>
                   {% endfor %}
                   </tbody>

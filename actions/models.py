@@ -84,7 +84,9 @@ class Person(models.Model):
 
 
 class Player(Person):
+    #TODO  since I created team field, maybe dont nned club field
     club = models.ForeignKey(Club, null=True, on_delete=models.SET_NULL, related_name='players')
+    teams = models.ManyToManyField(Team, blank=True, related_name='players')  # TODO make sure team belong to club
 
     class Meta:
         ordering = ['last_name']
@@ -97,8 +99,11 @@ class Type(models.Model):
     name = models.CharField(max_length=64)
     name_cz = models.CharField(max_length=64)
 
+    class Meta:
+        ordering = ['name_cz']
+
     def __str__(self):
-        return self.name
+        return self.name_cz
 
 
 class Subtype(models.Model):
@@ -107,7 +112,7 @@ class Subtype(models.Model):
     name_cz = models.CharField(max_length=64)
 
     def __str__(self):
-        return self.name
+        return self.name_cz
 
 
 class Action(models.Model):
