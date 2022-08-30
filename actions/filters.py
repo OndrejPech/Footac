@@ -1,8 +1,6 @@
 import django_filters
 from .models import Action, Team, Game, Type, Player
-from django.db.models import Q,QuerySet
-from django import forms
-from django.contrib.auth.models import User, Group
+from django.db.models import Q
 
 
 class ActionFilter(django_filters.FilterSet):
@@ -18,9 +16,18 @@ class ActionFilter(django_filters.FilterSet):
         self.filters['passive_player'].queryset = Player.objects.filter(teams=self.team_id)
         self.filters['passive_player'].label = 'pas. hráč'
 
+    CHOICES = (
+        ('attack', 'útočí'), ('defence', 'brání')
+    )
+
+    team_in_possession = django_filters.ChoiceFilter(label='můj tým', choices=CHOICES, method='attack_or_defence')
+
     class Meta:
         model = Action
-        fields = ['type', 'game', 'active_player', 'passive_player', 'team']
+        fields = ['type', 'game', 'active_player', 'passive_player']
 
-
-
+    def attack_or_defence(self, queryset, name,  value):
+        if value == 'attack':
+            return queryset.filter(team=self.team_id)
+        elif value == 'defence':
+            return queryset.filter(opp_team=self.team_id)
