@@ -10,13 +10,14 @@
 
 <div  class="col-md-11 offset-md-1">
 <form method="GET">
-{{ action_filter.form }}
-<button type="submit">Filter</button>
+{{ action_filter.form.as_table }}
+<button type="submit" class="btn btn-secondary btn-sm">Filter</button>
 </form>
     </div>
 
     <br>
     <div class="container">
+
     {% if page_results %}
         <small class="text-muted">Akce {{ page_results.start_index }} až {{ page_results.end_index }} z {{ page_results.paginator.count }}.</small>
     {% else %}
@@ -71,8 +72,8 @@
     {% if page_results.has_other_pages %}
     <div class="btn-group" role="group" aria-label="Item pagination">
         {% if page_results.has_previous %}
-            <a href="?page=1" class="btn btn-outline-secondary">|&laquo;</a>
-            <a href="?page={{ page_results.previous_page_number }}" class="btn btn-outline-secondary">&laquo;</a>
+            <a href="{% update_url 1 'page' request.GET.urlencode %}" class="btn btn-outline-secondary">|&laquo;</a>
+            <a href="{% update_url page_results.previous_page_number 'page' request.GET.urlencode %}" class="btn btn-outline-secondary">&laquo;</a>
         {% endif %}
 
         {% for page_number in page_results.paginator.page_range %}
@@ -81,15 +82,13 @@
                     <span>{{ page_number }} <span class="sr-only"></span></span>
                 </button>
             {% elif page_number|add:'4' >= page_results.number and page_number|add:'-6' <= page_results.number%}
-                <a href="?page={{ page_number }}" class="btn btn-outline-secondary">
-                    {{ page_number }}
-                </a>
+                   <a href="{% update_url page_number 'page' request.GET.urlencode %}" class="btn btn-outline-secondary">{{ page_number }}</a>
             {% endif %}
         {% endfor %}
 
         {% if page_results.has_next %}
-            <a href="?page={{ page_results.next_page_number }}" class="btn btn-outline-secondary">&raquo;</a>
-            <a href="?page={{ page_results.paginator.num_pages }}" class="btn btn-outline-secondary">&raquo;|</a>
+            <a href="{% update_url page_results.next_page_number 'page' request.GET.urlencode %}" class="btn btn-outline-secondary">&raquo;</a>
+            <a href="{% update_url page_results.paginator.num_pages 'page' request.GET.urlencode %}" class="btn btn-outline-secondary">&raquo;|</a>
         {% endif %}
 
     {% endif %}
