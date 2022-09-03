@@ -71,7 +71,7 @@ class Game(models.Model):
         ordering = ['-date']
 
     def __str__(self):
-        return f'{self.date} {self.home_team}  {self.home_score }:{self.away_score}  {self.away_team}'
+        return f'{self.date}, {self.home_team} {self.home_score }:{self.away_score} {self.away_team}'
 
 
 class Person(models.Model):
@@ -138,7 +138,8 @@ class Action(models.Model):
         return f'{m:02d}:{s:02d}'
 
     def __str__(self):
-        # if I self.display_time max recrusion is overcme
+        # if I use self.display_time, program goes to infinitive recrusion loop,
+        # so I need to calculate it here
         m, s = divmod(self.game_time, 60)
         time = f'{m:02d}:{s:02d}'
-        return f'{time} {self.type} against {self.opp_team}'
+        return f'{time} {self.type.name} vs. {self.opp_team}'
