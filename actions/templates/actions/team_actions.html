@@ -50,7 +50,7 @@
                     {% start_end_video action.game.link_2 action.video_time action.type.name as link2 %}
                     <a href ="{{ link2}}">Vim</a>
                 {% endif %}
-                {% if action.game.link_2 %}
+                {% if action.game.link_3 %}
                     {% start_end_video action.game.link_3 action.video_time action.type.name as link3 %}
                     <a href ="{{ link3 }}">Oth</a>
                 {% endif %}
@@ -62,9 +62,10 @@
             <td>{% if action.subtype %}{{ action.subtype }}{% endif %}</td>
             <td>{{ action.team.abbrev }}</td>
             <td>{% if action.active_player %}{{ action.active_player}}{% endif %}</td>
-            <td>{% if action.start_x and action.start_y%}{{action.start_x}},{{action.start_y}}{% endif %}</td>
             <td>{% if action.passive_player %}{{ action.passive_player}}{% endif %}</td>
-            <td>edit</td>
+            <td>{% if action.start_x and action.start_y%}{{action.start_x}},{{action.start_y}}{% endif %}</td>
+{#        TODO check user allowance#}
+            <td><a href ="{%  url 'actions:action_edit' action.id %}">Edit</a></td>
         </tr>
         {% endfor %}
     </table>

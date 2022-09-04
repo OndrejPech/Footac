@@ -12,13 +12,14 @@ Class-based views
 """
 
 from django.urls import path
-from .views import home_view, club_view, team_actions_view
+from .views import home_view, club_view, team_actions_view, edit_action_view
 
 app_name = 'actions'
 urlpatterns = [
     path('', home_view, name='home'),
     path('clubs/<int:club_id>/', club_view, name='club_detail'),
     path('teams/<int:team_id>/actions', team_actions_view, name='team_actions'),
+    path('actions/<int:action_id>/edit', edit_action_view, name='action_edit'),
 ]
 
 # conventions

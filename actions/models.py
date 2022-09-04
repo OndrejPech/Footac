@@ -121,8 +121,8 @@ class Action(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name='game_actions')
     team = models.ForeignKey(Team, null=True, on_delete=models.SET_NULL, related_name='team_actions')
     opp_team = models.ForeignKey(Team, null=True, on_delete=models.SET_NULL, related_name='opp_team_actions')
-    active_player = models.ForeignKey(Player, null=True, on_delete=models.SET_NULL, related_name='active_player_actions')
-    passive_player = models.ForeignKey(Player, null=True, on_delete=models.SET_NULL, related_name='passive_player_actions')
+    active_player = models.ForeignKey(Player, null=True, blank=True, on_delete=models.SET_NULL, related_name='active_player_actions')
+    passive_player = models.ForeignKey(Player, null=True, blank=True, on_delete=models.SET_NULL, related_name='passive_player_actions')
     game_time = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(10000)])  # in seconds
     video_time = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(10000)])  # in seconds
     start_x = models.IntegerField(null=True, blank=True)

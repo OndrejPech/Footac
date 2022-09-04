@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{%  load custom_tags %}
+
+{% block title %}Akce edit{% endblock %}
+
+{% block content %}
+
+
+<div  class="col-md-10 offset-md-1">
+<div class="card text-center">
+  <div class="card-header">{{ action.game }}</div>
+  <div class="card-body">
+    <h5 class="card-title">{{ action.type.name_cz|capfirst }} týmu {{ action.team }}</h5>
+    <h6 >v čase {{ action.display_time }}</h6>
+    <p>
+    {% if action.game.link_1 %}
+        {% start_end_video action.game.link_1 action.video_time action.type.name as link1 %}
+        <a href ="{{ link1 }}">Youtube</a>
+    {% endif %}
+{#            # TODO for Vimeo and Other link function tag can be different#}
+    {% if action.game.link_2 %}
+        {% start_end_video action.game.link_2 action.video_time action.type.name as link2 %}
+        <a href ="{{ link2}}">Vimeo</a>
+    {% endif %}
+    {% if action.game.link_3 %}
+        {% start_end_video action.game.link_3 action.video_time action.type.name as link3 %}
+        <a href ="{{ link3 }}">Video.cz</a>
+    {% endif %}
+    </p>
+    <p >
+        Aktivní hráč: {% if action.active_player %}{{ action.active_player }}{% endif %}
+    <br>
+        Pasivní hráč: {% if action.passive_player %}{{ action.passive_player }}{% endif %}
+  </div>
+  <div class="card-footer">
+      <form action="{% url 'actions:action_edit' action.id %}" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+{#   TODO 8 for substitution is hardcoded, change it#}
+{#      substitution of opposite team is not possible to edit#}
+    {% if action.type.id == 8 and not my_team_attack %}
+        <div class="text-muted">Nelze změnit, vaši hráči nejsou součástí této akce</div>
+    {% else %}
+        <button type="submit" class="btn btn-secondary btn-sm">Změň</button>
+    {% endif %}
+      </form>
+  </div>
+  </div>
+</div>
+
+
+{% endblock %}
