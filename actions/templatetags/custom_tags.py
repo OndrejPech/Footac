@@ -16,7 +16,10 @@ def start_end_video(link, video_time, type):
                     'free kick': (3, 10),
                     'substitution': (5, 20),
                     'offside': (10, 10),
-                    'goal': (30, 10)
+                    'goal': (30, 10),
+                    'penalty': (5, 10),
+                    'yellow card': (30, 10),
+                    'red card': (30, 10)
                     }
 
     try:
