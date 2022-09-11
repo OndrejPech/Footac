@@ -63,7 +63,9 @@
             <td>{{ action.team.abbrev }}</td>
             <td>{% if action.active_player %}{{ action.active_player}}{% endif %}</td>
             <td>{% if action.passive_player %}{{ action.passive_player}}{% endif %}</td>
-            <td>{% if action.start_x and action.start_y%}{{action.start_x}},{{action.start_y}}{% endif %}</td>
+            <td>{% if action.start_x is not None and action.start_y is not None%}
+                {{action.start_x}},{{action.start_y}}
+                {%  endif %}</td>
 {#        TODO check user allowance#}
             <td><a href ="{%  url 'actions:action_edit' action.id %}">Edit</a></td>
         </tr>
