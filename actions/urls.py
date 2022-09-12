@@ -12,7 +12,8 @@ Class-based views
 """
 
 from django.urls import path
-from .views import home_view, club_view, team_actions_view, edit_action_view
+from .views import home_view, club_view, team_actions_view, edit_action_view, \
+    game_view
 
 app_name = 'actions'
 urlpatterns = [
@@ -20,6 +21,7 @@ urlpatterns = [
     path('clubs/<int:club_id>/', club_view, name='club_detail'),
     path('teams/<int:team_id>/actions', team_actions_view, name='team_actions'),
     path('actions/<int:action_id>/edit', edit_action_view, name='action_edit'),
+    path('games/<int:game_id>/', game_view, name='game_detail'),
 ]
 
 # conventions

@@ -63,9 +63,14 @@
                 <p class="mb-0">{{ game.home_team }}</p>
               </div>
                 <div class="col-sm-3">
-                <p class="text-muted mb-0">{{ game.home_score }}:{{ game.away_score }}
-                {% if game.penalty_dec %}p
+
+                <p class="text-muted mb-0">
+                <a href="{%  url 'actions:game_detail' game.id %}">
+                    {{ game.home_score }}:{{ game.away_score }}
+                {% if game.penalty_dec %}np
+                {% elif game.extra_time_dec %}pp
                 {% endif %}
+                </a>
                 </p>
               </div>
                               <div class="col-sm-3">

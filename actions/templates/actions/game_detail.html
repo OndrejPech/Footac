@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+{%  load static %}
+
+{% block title %}Detail zápasu{% endblock %}
+
+{% block content %}
+
+<div  class="col-md-8 offset-md-2">
+<div class="card">
+    <div class="row">
+  <div class="col-3">
+    <div class="card border-0">
+      <img src="/static/img/logos/{{ game.home_team.club.logo }}" class="card-img-top" alt="home_team_logo">
+    </div>
+  </div>
+  <div class="col-6">
+    <div class="card border-0">
+
+      <div class="card-body">
+        <h5 class="card-title text-center">{{ game.date |date:"d/m/Y"}}</h5>
+        <p class="card-text text-center">
+          {{ game.league }}
+        <br>
+            {% if user.account.club == game.home_team.club or user.account.club == game.away_team.club%}
+                  {% if game.link_1 %}
+                      <a href="{{ game.link_1 }}">Youtube</a><p>
+                  {% endif %}
+                                {% if game.link_2 %}
+                      <a href="{{ game.link_2 }}">Vimeo</a>
+                  {% endif %}
+                                {% if game.link_3 %}
+                      <a href="{{ game.link_3 }}">Nxt</a>
+                  {% endif %}
+              {% endif %}
+            </p>
+        <p class="card-text text-center">
+          {% if game.extra_time_dec %}
+            rozhodnuto v prodloužení
+        {% elif game.penalty_dec %}
+            rozhodnuto na penalty
+        {% endif %}
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="col-3">
+    <div class="card border-0">
+      <img src="/static/img/logos/{{ game.away_team.club.logo }}" class="card-img-top" alt="away_team_logo"/>
+    </div>
+  </div>
+</div>
+
+<table class="table table-striped text-center">
+    <thead>
+    <tr>
+      <th scope="col" class="col-3">{{ game.home_team }}</th>
+      <th scope="col" class="col-6"></th>
+      <th scope="col" class="col-3">{{ game.away_team }}</th>
+    </tr>
+  </thead>
+    <tbody>
+    <tr>
+      <td style="font-weight:bold">{{ game.home_score }}</td>
+      <th scope="row">Góly</th>
+      <td style="font-weight:bold">{{ game.away_score }}</td>
+    </tr>
+    {% if game.home_team_possession %}
+    <tr>
+      <td>{{ game.home_team_possession }} %</td>
+      <th scope="row">Držení míče</th>
+      <td>{{ game.away_team_possession }} %</td>
+    </tr>
+    {% endif %}
+    <tr>
+      <td>{{ data.home_shot }}</td>
+      <th scope="row">Střely</th>
+      <td>{{ data.away_shot }}</td>
+    </tr>
+    <tr>
+      <td>{{ data.home_pass }}</td>
+      <th scope="row">Nahrávky</th>
+      <td>{{ data.away_pass }}</td>
+    </tr>
+    <tr>
+      <td>{{ data.home_corner }}</td>
+      <th scope="row">Rohy</th>
+      <td>{{ data.away_corner }}</td>
+    </tr>
+    <tr>
+      <td>{{ data.home_free_kick }}</td>
+      <th scope="row">Přímé kopy</th>
+      <td>{{ data.away_free_kick }}</td>
+    </tr>
+    <tr>
+      <td>{{ data.home_goal_kick }}</td>
+      <th scope="row">Odkopy od brány</th>
+      <td>{{ data.away_goal_kick }}</td>
+    </tr>
+    <tr>
+      <td>{{ data.home_throw_in }}</td>
+      <th scope="row">Vhazovaní</th>
+      <td>{{ data.away_throw_in }}</td>
+    </tr>
+    <tr>
+      <td>{{ data.home_penalty_kick }}</td>
+      <th scope="row">Penalty</th>
+      <td>{{ data.away_penalty_kick }}</td>
+    </tr>
+    <tr>
+      <td>{{ data.home_foul }}</td>
+      <th scope="row">Fauly</th>
+      <td>{{ data.away_foul }}</td>
+    </tr>
+    <tr>
+      <td>{{ data.home_yellow_card }}</td>
+      <th scope="row">Žluté karty</th>
+      <td>{{ data.away_yellow_card }}</td>
+    </tr>
+    <tr>
+      <td>{{ data.home_red_card }}</td>
+      <th scope="row">Červené karty</th>
+      <td>{{ data.away_red_card }}</td>
+    </tr>
+    <tr>
+      <td>{{ data.home_substitution }}</td>
+      <th scope="row">Střídání</th>
+      <td>{{ data.away_substitution }}</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+{% endblock %}
