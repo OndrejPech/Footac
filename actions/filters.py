@@ -46,6 +46,6 @@ class ActionFilter(django_filters.FilterSet):
 
     def show_pass(self, queryset, name,  value):
         if value == 'no':
-            return queryset.exclude(type=2)  # ID 2 belongs to shoot # TODO read file to auto input this id
+            return queryset.exclude(type__in=[2, 14])  # ID 2,14 belongs to pass # TODO read file to auto input this id
         else:
             return queryset

@@ -12,7 +12,7 @@ from .forms import ActionForm
 ACTIONS_IDS = {
     'shot': 1, 'pass': 2, 'foul': 3, 'throw_in': 4, 'corner': 5, 'goal_kick': 6,
     'free_kick': 7, 'substitution': 8, 'offside': 9, 'goal': 10,
-    'penalty_kick': 11, 'yellow_card': 12, 'red_card': 13
+    'penalty_kick': 11, 'yellow_card': 12, 'red_card': 13, 'lob': 14
                }
 
 

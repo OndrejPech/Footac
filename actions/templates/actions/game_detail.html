@@ -77,9 +77,19 @@
       <td>{{ data.away_shot }}</td>
     </tr>
     <tr>
+      <td>{{ data.home_pass|add:data.home_lob }}</td>
+      <th scope="row">Přihrávky celkem</th>
+      <td>{{ data.away_pass|add:data.away_lob }}</td>
+    </tr>
+    <tr>
       <td>{{ data.home_pass }}</td>
-      <th scope="row">Nahrávky</th>
+      <th scope="row">Přihrávky po zemi</th>
       <td>{{ data.away_pass }}</td>
+    </tr>
+        <tr>
+      <td>{{ data.home_lob }}</td>
+      <th scope="row">Přihrávky vzduchem</th>
+      <td>{{ data.away_lob }}</td>
     </tr>
     <tr>
       <td>{{ data.home_corner }}</td>

@@ -5,7 +5,7 @@ from django import forms
 
 # ids,of actions_type where passive_player can not be from attacking team:
 # shot, foul, goal, penalty, yellow card, red card
-no_passive_player_ids = {1, 3, 10, 11, 2, 12, 13}
+no_passive_player_ids = {1, 3, 10, 11, 12, 13}
 # ids,of actions_type where passive_player has to be from attacking team:
 # substitution,
 attacking_team_only_ids = {8}

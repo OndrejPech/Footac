@@ -7,19 +7,20 @@ register = template.Library()
 def start_end_video(link, video_time, type):
     """return videolink with start and end parameters base on type of action"""
     # TODO can I use Integer as key for faster search or different way how to speed lookups?
-    action_types = {'shot': (5, 10),
-                    'pass': (2, 5),
-                    'foul': (5, 10),
-                    'throw in': (3, 6),
-                    'corner kick:': (3, 10),
-                    'goal kick': (3, 10),
-                    'free kick': (3, 10),
+    action_types = {'shot': (5, 20),
+                    'pass': (2, 10),
+                    'foul': (5, 20),
+                    'throw in': (3, 16),
+                    'corner kick': (3, 25),
+                    'goal kick': (3, 20),
+                    'free kick': (3, 20),
                     'substitution': (5, 20),
-                    'offside': (10, 10),
-                    'goal': (30, 10),
-                    'penalty': (5, 10),
-                    'yellow card': (30, 10),
-                    'red card': (30, 10)
+                    'offside': (10, 20),
+                    'goal': (20, 20),
+                    'penalty kick': (5, 10),
+                    'yellow card': (20, 20),
+                    'red card': (20, 20),
+                    'lob/cross': (10, 10)
                     }
 
     try:
@@ -27,6 +28,7 @@ def start_end_video(link, video_time, type):
         start = video_time - start_end[0]
         end = video_time + start_end[1]
     except KeyError:
+        print(f'{type} not found by start_end_video tag')
         start = video_time - 5
         end = video_time + 10
 
