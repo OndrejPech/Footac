@@ -93,7 +93,7 @@ def edit_action_view(request, action_id):
     form = ActionForm(instance=action, team_id=my_team_id,
                       my_team_attack=my_team_attack, action_type_id=action.type.id)
 
-    content = {'action': action, 'my_team_attack': my_team_attack, 'form': form}
+    content = {'action': action, 'my_team_attack': my_team_attack, 'form': form, 'team_id': my_team_id}
     if request.method == 'POST':
         form = ActionForm(request.POST, instance=action, team_id=my_team_id,
                           my_team_attack=my_team_attack, action_type_id=action.type.id)
