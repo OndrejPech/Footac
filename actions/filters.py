@@ -19,7 +19,7 @@ class ActionFilter(django_filters.FilterSet):
         self.team_id = kwargs.pop('team_id')  # new kwarg argument added
         super().__init__(data, *args, **kwargs)
         # override fields
-        self.filters['type'].label = 'typ'
+        self.filters['type'].label = 'typ akce'
         self.filters['game'].queryset = Game.objects.filter(Q(home_team_id=self.team_id) | Q(away_team_id=self.team_id))
         self.filters['game'].label = 'zápas'
         self.filters['active_player'].queryset = Player.objects.filter(teams=self.team_id)
@@ -34,7 +34,7 @@ class ActionFilter(django_filters.FilterSet):
     team_in_possession = django_filters.ChoiceFilter(label='můj tým',
                                                      choices=TEAM_CHOICES,
                                                      method='attack_or_defence')
-    field_half = django_filters.ChoiceFilter(label='polovina',
+    field_half = django_filters.ChoiceFilter(label='polovina hřiště',
                                              choices=FIELD_CHOICES,
                                              method='show_field_half')
     # The only one filter with initial value
@@ -44,7 +44,8 @@ class ActionFilter(django_filters.FilterSet):
 
     class Meta:
         model = Action
-        fields = ['type', 'game', 'active_player', 'passive_player']
+        fields = ['type', 'game', 'team_in_possession', 'field_half',
+                  'active_player', 'passive_player']
 
     def attack_or_defence(self, queryset, name,  value):
         if value == 'attack':
