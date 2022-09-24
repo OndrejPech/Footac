@@ -60,18 +60,19 @@
                             <td>{{ action.display_time }}</td>
                             <td>{{ action.type.name_cz }}</td>
                             <td>{% if action.left_pitch_team == team %}
-                                {% if action.side == 1 %}
-                                    obraná
-                                {% elif action.side == 2 %}
-                                    útočná
+                                    {% if action.side == 1 %}
+                                        obranná
+                                    {% elif action.side == 2 %}
+                                        útočná
+                                    {% endif %}
+                                {% elif action.right_pitch_team == team %}
+                                    {% if action.side == 2 %}
+                                        obranná
+                                    {% elif action.side == 1 %}
+                                        útočná
+                                    {% endif %}
                                 {% endif %}
-                            {% elif action.right_pitch_team == team %}
-                                {% if action.side == 2 %}
-                                    obranná
-                                {% elif action.side == 1 %}
-                                    útočná
-                                {% endif %}
-                            {% endif %}
+                            </td>
                             <td>{{ action.team.abbrev }}</td>
                             <td>{% if action.active_player %}{{ action.active_player }}{% endif %}</td>
                             <td>{% if action.passive_player %}{{ action.passive_player }}{% endif %}</td>
