@@ -119,6 +119,10 @@ class Subtype(models.Model):
 
 
 class Action(models.Model):
+    class Side(models.IntegerChoices):
+        LEFT = 1
+        RIGHT = 2
+
     type = models.ForeignKey(Type, null=True, on_delete=models.SET_NULL, related_name='type_actions')
     subtype = models.ForeignKey(Subtype, null=True, on_delete=models.SET_NULL, related_name='subtype_actions')
     game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name='game_actions')
@@ -130,6 +134,7 @@ class Action(models.Model):
     video_time = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(10000)])  # in seconds
     left_pitch_team = models.ForeignKey(Team, null=True, on_delete=models.SET_NULL, related_name='left_pitch_teams')
     right_pitch_team = models.ForeignKey(Team, null=True, on_delete=models.SET_NULL, related_name='right_pitch_teams')
+    side = models.IntegerField(choices=Side.choices, null=True, blank=True)
     start_x = models.IntegerField(null=True, blank=True)
     start_y = models.IntegerField(null=True, blank=True)
     end_x = models.IntegerField(null=True, blank=True)

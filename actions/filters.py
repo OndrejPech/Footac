@@ -29,10 +29,18 @@ class ActionFilter(django_filters.FilterSet):
 
     TEAM_CHOICES = (('attack', 'útočí'), ('defence', 'brání'))  # (value, label)
     PASS_CHOICES = (('no', 'ne'), ('yes', 'ano'))
+    FIELD_CHOICES = (('attacking', 'útočná'), ('defending', 'obranná'))
 
-    team_in_possession = django_filters.ChoiceFilter(label='můj tým', choices=TEAM_CHOICES, method='attack_or_defence')
+    team_in_possession = django_filters.ChoiceFilter(label='můj tým',
+                                                     choices=TEAM_CHOICES,
+                                                     method='attack_or_defence')
+    field_half = django_filters.ChoiceFilter(label='polovina',
+                                             choices=FIELD_CHOICES,
+                                             method='show_field_half')
     # The only one filter with initial value
-    show_passes = django_filters.ChoiceFilter(label='zobrazit nahrávky', choices=PASS_CHOICES, method='show_pass', initial='no')
+    show_passes = django_filters.ChoiceFilter(label='zobrazit nahrávky',
+                                              choices=PASS_CHOICES,
+                                              method='show_pass', initial='no')
 
     class Meta:
         model = Action
@@ -49,3 +57,11 @@ class ActionFilter(django_filters.FilterSet):
             return queryset.exclude(type__in=[2, 14])  # ID 2,14 belongs to pass # TODO read file to auto input this id
         else:
             return queryset
+
+    def show_field_half(self, queryset, name,  value):
+        if value == 'attacking':
+            return queryset.filter(Q(left_pitch_team=self.team_id, side=2) | Q(
+                right_pitch_team=self.team_id, side=1))
+        elif value == 'defending':
+            return queryset.filter(Q(left_pitch_team=self.team_id, side=1) | Q(
+                right_pitch_team=self.team_id, side=2))

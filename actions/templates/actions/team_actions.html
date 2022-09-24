@@ -31,7 +31,7 @@
             <th>zápas</th>
             <th>čas</th>
             <th>typ</th>
-            <th>podtyp</th>
+            <th>polovina</th>
             <th>tým</th>
             <th>hráč</th>
             <th>pas. hráč</th>
@@ -59,7 +59,19 @@
             <td>{{ action.game.home_team.abbrev}} vs. {{ action.game.away_team.abbrev}}</td>
             <td>{{ action.display_time }}</td>
             <td>{{ action.type.name_cz }}</td>
-            <td>{% if action.subtype %}{{ action.subtype }}{% endif %}</td>
+            <td>{% if action.left_pitch_team == team%}
+                    {% if action.side == 1  %}
+                        obraná
+                    {%  elif action.side == 2 %}
+                        útočná
+                    {% endif %}
+                {% elif action.right_pitch_team == team%}
+                    {% if action.side == 2  %}
+                        obranná
+                    {%  elif action.side == 1 %}
+                        útočná
+                    {% endif %}
+                {% endif %}
             <td>{{ action.team.abbrev }}</td>
             <td>{% if action.active_player %}{{ action.active_player}}{% endif %}</td>
             <td>{% if action.passive_player %}{{ action.passive_player}}{% endif %}</td>
