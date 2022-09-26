@@ -3,7 +3,7 @@ from actions.models import Action
 
 # https://django-extensions.readthedocs.io/en/latest/runscript.html
 
-file_path = '/Users/ondrejpech/Desktop/backup matches/zruc-sla 1 half.csv'
+file_path = ''
 
 
 def run():
@@ -22,8 +22,9 @@ def run():
                                                            opp_team_id=row[6],
                                                            left_pitch_team_id=row[7],
                                                            right_pitch_team_id=row[8],
-                                                           game_time=row[9],
-                                                           video_time=row[10])
+                                                           side=row[9],
+                                                           game_time=row[10],
+                                                           video_time=row[11])
 
             if not created:
                 print(f'{Action} exists')
