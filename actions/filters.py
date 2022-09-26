@@ -29,7 +29,8 @@ class ActionFilter(django_filters.FilterSet):
 
     TEAM_CHOICES = (('attack', 'útočí'), ('defence', 'brání'))  # (value, label)
     PASS_CHOICES = (('no', 'ne'), ('yes', 'ano'))
-    FIELD_CHOICES = (('attacking', 'útočná'), ('defending', 'obranná'))
+    FIELD_CHOICES = (('attacking', 'útočná'), ('defending', 'obranná'),
+                     ('no_data', 'neznámá'))
 
     team_in_possession = django_filters.ChoiceFilter(label='můj tým',
                                                      choices=TEAM_CHOICES,
@@ -66,3 +67,5 @@ class ActionFilter(django_filters.FilterSet):
         elif value == 'defending':
             return queryset.filter(Q(left_pitch_team=self.team_id, side=1) | Q(
                 right_pitch_team=self.team_id, side=2))
+        elif value == 'no_data':
+            return queryset.filter(side=None)
