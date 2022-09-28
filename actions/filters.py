@@ -20,11 +20,14 @@ class ActionFilter(django_filters.FilterSet):
         super().__init__(data, *args, **kwargs)
         # override fields
         self.filters['type'].label = 'typ akce'
-        self.filters['game'].queryset = Game.objects.filter(Q(home_team_id=self.team_id) | Q(away_team_id=self.team_id))
+        self.filters['game'].queryset = Game.objects.filter(
+            Q(home_team_id=self.team_id) | Q(away_team_id=self.team_id))
         self.filters['game'].label = 'zápas'
-        self.filters['active_player'].queryset = Player.objects.filter(teams=self.team_id)
+        self.filters['active_player'].queryset = Player.objects.filter(
+            teams=self.team_id)
         self.filters['active_player'].label = 'hráč'
-        self.filters['passive_player'].queryset = Player.objects.filter(teams=self.team_id)
+        self.filters['passive_player'].queryset = Player.objects.filter(
+            teams=self.team_id)
         self.filters['passive_player'].label = 'pas. hráč'
 
     TEAM_CHOICES = (('attack', 'útočí'), ('defence', 'brání'))  # (value, label)
@@ -48,19 +51,20 @@ class ActionFilter(django_filters.FilterSet):
         fields = ['type', 'game', 'team_in_possession', 'field_half',
                   'active_player', 'passive_player']
 
-    def attack_or_defence(self, queryset, name,  value):
+    def attack_or_defence(self, queryset, name, value):
         if value == 'attack':
             return queryset.filter(team=self.team_id)
         elif value == 'defence':
             return queryset.filter(opp_team=self.team_id)
 
-    def show_pass(self, queryset, name,  value):
+    def show_pass(self, queryset, name, value):
         if value == 'no':
-            return queryset.exclude(type__in=[2, 14])  # ID 2,14 belongs to pass # TODO read file to auto input this id
+            return queryset.exclude(type__in=[2,
+                                              14])  # ID 2,14 belongs to pass # TODO read file to auto input this id
         else:
             return queryset
 
-    def show_field_half(self, queryset, name,  value):
+    def show_field_half(self, queryset, name, value):
         if value == 'attacking':
             return queryset.filter(Q(left_pitch_team=self.team_id, side=2) | Q(
                 right_pitch_team=self.team_id, side=1))

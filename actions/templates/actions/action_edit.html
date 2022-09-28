@@ -40,7 +40,6 @@
                         </div>
 
                     {% endif %}
-                {#            # TODO for Vimeo and Other link function tag can be different#}
                 {% if action.game.link_2 %}
                     {% start_end_video action.game.link_2 action.video_time action.type.name as link2 %}
                     <a href="{{ link2 }}">Vimeo</a>

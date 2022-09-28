@@ -1,137 +1,131 @@
 {% extends "base.html" %}
-{%  load static %}
+{% load static %}
 
-{% block title %}{{ club.name}}{% endblock %}
+{% block title %}{{ club.name }}{% endblock %}
 
 {% block content %}
 
-  <div class="container py-5">
-    <div class="row">
-      <div class="col-lg-3">
-      {#    Basic info#}
-        <div class="card mb-4">
-          <div class="card-body text-center">
-              {% if club.logo %}
-            <img src="/static/img/logos/{{ club.logo }}" alt="logo_id_1"
-              class="rounded-circle img-fluid" style="width: 150px;">
-              {% else %}
-            <img src="{% static 'img/footac/Footac_logo_small.png' %}" alt="logo_id_1"
-              class="rounded-circle img-fluid" style="width: 150px;">
-              {% endif %}
-            <h3 class="my-3">{{ club.name }}</h3>
-            {% if club.email %}
-            <p class="text mb-1">{{ club.email}}</p>
-            {% endif %}
-            {% if club.address %}
-            <p class="text-muted mb-4">{{ club.address }}</p>
-            {%  endif %}
-          </div>
-        </div>
-
-{#          Teams#}
-        <div class="card mb-4 mb-lg-0">
-          <div class="card-body p-0">
-            <ul class="list-group list-group-flush rounded-3">
-              <li class="list-group-item p-3 text-center">
-                  <h4>Týmy</h4>
-              </li>
-                {%  for team in teams %}
-              <li class="list-group-item d-flex justify-content-between align-items-center p-3 text-center">
-                <i class="fab fa-github fa-lg"></i>
-                <p class="mb-0">{{ team }}</p>
-                {% endfor %}
-            </ul>
-          </div>
-        </div>
-      </div>
-
-
-
-      <div class="col-lg-9">
-          {#        Games with links#}
-        <div class="card mb-4">
-          <div class="card-body">
-          <h4 class="text-center">Zápasy</h4>
-
-              {% for game in games %}
-                  <hr>
-            <div class="row">
-              <div class="col-sm-3">
-                <p class="mb-0">{{ game.date |date:"d/m/Y"}}</p>
-              </div>
-                <div class="col-sm-3">
-                <p class="mb-0">{{ game.home_team }}</p>
-              </div>
-                <div class="col-sm-3">
-
-                <p class="text-muted mb-0">
-                <a href="{%  url 'actions:game_detail' game.id %}">
-                    {{ game.home_score }}:{{ game.away_score }}
-                {% if game.penalty_dec %}np
-                {% elif game.extra_time_dec %}pp
-                {% endif %}
-                </a>
-                </p>
-              </div>
-                              <div class="col-sm-3">
-                <p class="mb-0">{{ game.away_team}}</p>
-              </div>
-
-
-{#            links are visible only if user account is associated with showed team(club)#}
-              <div class="col-sm-2">
-              {% if user.account.club == game.home_team.club or user.account.club == game.away_team.club%}
-                  {% if game.link_1 %}
-                      <a href="{{ game.link_1 }}">Youtube</a>
-                  {% endif %}
-                                {% if game.link_2 %}
-                      <a href="{{ game.link_2 }}">Vimeo</a>
-                  {% endif %}
-                                {% if game.link_3 %}
-                      <a href="{{ game.link_3 }}">Nxt</a>
-                  {% endif %}
-              {% endif %}
-              </div>
-
-            </div>
-              {% endfor %}
-
-
-
-          </div>
-        </div>
+    <div class="container py-5">
         <div class="row">
-{#          <div class="col-md-6">#}
-              <div class="col-md-10 offset-md-1">
-
-            <div class="card mb-4 mb-md-0">
-              <div class="card-body">
-                  <h4 class="text-center">Soupiska</h4>
-                  <table class="table table-striped text-center">
-                  <tbody>
-                  {% for player in players %}
-                    <tr>
-                      <td >{{ player }}</td>
-                      <td>
-                      {% for team in player.teams.all %}
-                          {{ team.squad }},
-                          {% endfor %}</td>
-                    </tr>
-                  {% endfor %}
-                  </tbody>
-                  </table>
-
-
-
+            <div class="col-lg-3">
+                {#    Basic info#}
+                <div class="card mb-4">
+                    <div class="card-body text-center">
+                        {% if club.logo %}
+                            <img src="/static/img/logos/{{ club.logo }}" alt="logo_id_1"
+                                 class="rounded-circle img-fluid" style="width: 150px;">
+                        {% else %}
+                            <img src="{% static 'img/footac/Footac_logo_small.png' %}" alt="logo_id_1"
+                                 class="rounded-circle img-fluid" style="width: 150px;">
+                        {% endif %}
+                        <h3 class="my-3">{{ club.name }}</h3>
+                        {% if club.email %}
+                            <p class="text mb-1">{{ club.email }}</p>
+                        {% endif %}
+                        {% if club.address %}
+                            <p class="text-muted mb-4">{{ club.address }}</p>
+                        {% endif %}
+                    </div>
                 </div>
-              </div>
+
+                {#          Teams#}
+                <div class="card mb-4 mb-lg-0">
+                    <div class="card-body p-0">
+                        <ul class="list-group list-group-flush rounded-3">
+                            <li class="list-group-item p-3 text-center">
+                                <h4>Týmy</h4>
+                            </li>
+                            {% for team in teams %}
+                                <li class="list-group-item d-flex justify-content-between align-items-center p-3 text-center">
+                                <i class="fab fa-github fa-lg"></i>
+                                <p class="mb-0">{{ team }}</p>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
             </div>
-          </div>
-          </div>
+
+
+            <div class="col-lg-9">
+                {#        Games with links#}
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h4 class="text-center">Zápasy</h4>
+
+                        {% for game in games %}
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">{{ game.date |date:"d/m/Y" }}</p>
+                                </div>
+                                <div class="col-sm-3">
+                                    <p class="mb-0">{{ game.home_team }}</p>
+                                </div>
+                                <div class="col-sm-3">
+
+                                    <p class="text-muted mb-0">
+                                        <a href="{% url 'actions:game_detail' game.id %}">
+                                            {{ game.home_score }}:{{ game.away_score }}
+                                            {% if game.penalty_dec %}np
+                                            {% elif game.extra_time_dec %}pp
+                                            {% endif %}
+                                        </a>
+                                    </p>
+                                </div>
+                                <div class="col-sm-3">
+                                    <p class="mb-0">{{ game.away_team }}</p>
+                                </div>
+
+
+                                {#            links are visible only if user account is associated with showed team(club)#}
+                                <div class="col-sm-2">
+                                    {% if user.account.club == game.home_team.club or user.account.club == game.away_team.club %}
+                                        {% if game.link_1 %}
+                                            <a href="{{ game.link_1 }}">Youtube</a>
+                                        {% endif %}
+                                        {% if game.link_2 %}
+                                            <a href="{{ game.link_2 }}">Vimeo</a>
+                                        {% endif %}
+                                        {% if game.link_3 %}
+                                            <a href="{{ game.link_3 }}">Nxt</a>
+                                        {% endif %}
+                                    {% endif %}
+                                </div>
+
+                            </div>
+                        {% endfor %}
+
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10 offset-md-1">
+
+                        <div class="card mb-4 mb-md-0">
+                            <div class="card-body">
+                                <h4 class="text-center">Soupiska</h4>
+                                <table class="table table-striped text-center">
+                                    <tbody>
+                                    {% for player in players %}
+                                        <tr>
+                                            <td>{{ player }}</td>
+                                            <td>
+                                                {% for team in player.teams.all %}
+                                                    {{ team.squad }},
+                                                {% endfor %}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 
 
 {% endblock %}

@@ -20,8 +20,10 @@ def run():
                                                            game_id=row[3],
                                                            team_id=row[5],
                                                            opp_team_id=row[6],
-                                                           left_pitch_team_id=row[7],
-                                                           right_pitch_team_id=row[8],
+                                                           left_pitch_team_id=
+                                                           row[7],
+                                                           right_pitch_team_id=
+                                                           row[8],
                                                            side=row[9],
                                                            game_time=row[10],
                                                            video_time=row[11])
