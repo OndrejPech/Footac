@@ -16,6 +16,9 @@ def run():
         next(reader)  # skip headers
 
         for row in reader:
+            side = row[9]
+            if not side:  # side is empty string in csv
+                side = None
             action, created = Action.objects.get_or_create(type_id=row[4],
                                                            game_id=row[3],
                                                            team_id=row[5],
@@ -24,7 +27,7 @@ def run():
                                                            row[7],
                                                            right_pitch_team_id=
                                                            row[8],
-                                                           side=row[9],
+                                                           side=side,
                                                            game_time=row[10],
                                                            video_time=row[11])
 
