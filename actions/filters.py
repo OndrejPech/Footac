@@ -1,6 +1,7 @@
 import django_filters
 from .models import Action, Team, Game, Type, Player
 from django.db.models import Q
+from .db_data import LEFT_SIDE_ID, RIGHT_SIDE_ID, ACTIONS_IDS
 
 
 class ActionFilter(django_filters.FilterSet):
@@ -59,17 +60,19 @@ class ActionFilter(django_filters.FilterSet):
 
     def show_pass(self, queryset, name, value):
         if value == 'no':
-            return queryset.exclude(type__in=[2,
-                                              14])  # ID 2,14 belongs to pass # TODO read file to auto input this id
+            return queryset.exclude(
+                type__in=[ACTIONS_IDS['pass'], ACTIONS_IDS['lob']])
         else:
             return queryset
 
     def show_field_half(self, queryset, name, value):
         if value == 'attacking':
-            return queryset.filter(Q(left_pitch_team=self.team_id, side=2) | Q(
-                right_pitch_team=self.team_id, side=1))
+            return queryset.filter(
+                Q(left_pitch_team=self.team_id, side=RIGHT_SIDE_ID) | Q(
+                    right_pitch_team=self.team_id, side=LEFT_SIDE_ID))
         elif value == 'defending':
-            return queryset.filter(Q(left_pitch_team=self.team_id, side=1) | Q(
-                right_pitch_team=self.team_id, side=2))
+            return queryset.filter(
+                Q(left_pitch_team=self.team_id, side=LEFT_SIDE_ID) | Q(
+                    right_pitch_team=self.team_id, side=RIGHT_SIDE_ID))
         elif value == 'no_data':
             return queryset.filter(side=None)

@@ -1,15 +1,13 @@
 from django.forms import ModelForm
 from .models import Action, Player
 from django import forms
+from .db_data import ACTIONS_IDS as ID
 
 # ids,of actions_type where passive_player can not be from attacking team:
-# shot, foul, goal, penalty, yellow card, red card
-no_passive_player_ids = {1, 3, 10, 11, 12, 13}
+no_passive_player_ids = {ID['shot'], ID['foul'], ID['goal'], ID['penalty kick'],
+                         ID['yellow card'], ID['red card'], ID['lob']}
 # ids,of actions_type where passive_player has to be from attacking team:
-# substitution,
-attacking_team_only_ids = {8}
-
-
+attacking_team_only_ids = {ID['substitution']}
 # in other action_type passive player can be from attacking or defending team
 
 

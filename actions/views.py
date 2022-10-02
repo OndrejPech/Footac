@@ -1,19 +1,12 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from actions.models import Club, Team, Player, League, Game, Action
-from .filters import ActionFilter
 from django.db.models import Q
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
-from .forms import ActionForm
-
-# from DB,# TODO add file with db info
-# dont change name, they are use in game_detail.html
-ACTIONS_IDS = {
-    'shot': 1, 'pass': 2, 'foul': 3, 'throw_in': 4, 'corner': 5, 'goal_kick': 6,
-    'free_kick': 7, 'substitution': 8, 'offside': 9, 'goal': 10,
-    'penalty_kick': 11, 'yellow_card': 12, 'red_card': 13, 'lob': 14
-               }
+from actions.models import Club, Team, Game, Action
+from actions.filters import ActionFilter
+from actions.forms import ActionForm
+from actions.db_data import ACTIONS_IDS
 
 
 def home_view(request):
@@ -121,19 +114,17 @@ def game_view(request, game_id):
         """
         find out count from DB for home team and away team, save it to data dict
         """
-        home_name_string = f'home_{action_type}'
-        away_name_string = f'away_{action_type}'
+        home_name_string = f'home_{action_type.replace(" ", "_")}'
+        away_name_string = f'away_{action_type.replace(" ", "_")}'
 
         data[home_name_string] = home_team_act.filter(type_id=id).count()
         data[away_name_string] = away_team_act.filter(type_id=id).count()
-
 
     # fetch all counts from DB, is executing QUERY 24x to get different counts
     # need to optimalize in the future
     for action_type, action_id in ACTIONS_IDS.items():
         fill_data(action_type, action_id)
 
-
-    content = {'game':game, 'data':data}
+    content = {'game': game, 'data': data}
     return render(request, template_name='actions/game_detail.html',
                   context=content)
