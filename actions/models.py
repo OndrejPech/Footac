@@ -96,7 +96,7 @@ class Game(models.Model):
 
 class Person(models.Model):
     first_name = models.CharField(max_length=64)
-    last_name = models.CharField(max_length=64)
+    last_name = models.CharField(max_length=64, db_collation='cs_CZ.UTF-8')
     birth_day = models.DateField(null=True, blank=True)
 
     class Meta:
@@ -112,7 +112,7 @@ class Player(Person):
         ordering = ['last_name']
 
     def __str__(self):
-        return f'{self.first_name} {self.last_name}'
+        return f'{self.last_name} {self.first_name}'
 
 
 class Type(models.Model):
