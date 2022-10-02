@@ -65,7 +65,6 @@ def team_actions_view(request, team_id):
 def edit_action_view(request, action_id):
 
     # CHECK USER ALLOWANCE,
-    # TODO authentication and permission system
     try:
         club = request.user.account.club
     except ObjectDoesNotExist:  # No club associated with user,
@@ -73,7 +72,6 @@ def edit_action_view(request, action_id):
     club_teams_id = set(club.teams.all().values_list('id', flat=True))
 
     action = get_object_or_404(Action, id=action_id)
-    # TODO check if club or team was deleted and team.id is None
     if action.team.id in club_teams_id:  # user team attacking
         my_team_attack = True
         my_team_id = action.team.id
@@ -121,7 +119,7 @@ def game_view(request, game_id):
         data[away_name_string] = away_team_act.filter(type_id=id).count()
 
     # fetch all counts from DB, is executing QUERY 24x to get different counts
-    # need to optimalize in the future
+    # need to optimize in the future
     for action_type, action_id in ACTIONS_IDS.items():
         fill_data(action_type, action_id)
 
