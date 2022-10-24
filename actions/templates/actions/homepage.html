@@ -1,10 +1,20 @@
 {% extends "base.html" %}
 
+{% load static %}
 {% block title %}Welcome on Footac{% endblock %}
 
 {% block content %}
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-    <br><br><br><br><br><br><br><br>
+    <div class="container">
+        <div class="col-md-12 offset-md-0">
+            <img src="{% static 'img/footac/footac_logo_middle.png' %}" alt="" width="150"
+                 class="d-inline-block align-text-top">
+            <p>Vážení návštěvníci,</p>
+            <p>Děkujeme za Váš zájem o službu Footac. Omlouváme se, ale aplikace je momentálně ve vývoji a není ještě
+                oficiálně spuštěna. Pokud máte přihlašovací údaje k beta testování alfa verze projektu, prosím
+                přihlašte se.</p>
+            <p>Po přihlášení můžete v záložce klub kliknout na výsledek Vámi zvoleného zápasu a zobrazit si podrobné statistiky o utkání. V záložce Vámi zvolného týmu si můžete vyfiltrovat konkretní akce a okamžitě si je přehrát.</p>
 
+        </div>
+    </div>
 
 {% endblock %}
