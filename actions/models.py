@@ -96,7 +96,7 @@ class Game(models.Model):
 
 class Person(models.Model):
     first_name = models.CharField(max_length=64)
-    last_name = models.CharField(max_length=64, db_collation='cs_CZ')
+    last_name = models.CharField(max_length=64, db_collation='de_DE')
     birth_day = models.DateField(null=True, blank=True)
 
     class Meta:
