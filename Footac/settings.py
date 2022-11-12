@@ -145,3 +145,5 @@ LOGOUT_REDIRECT_URL = 'accounts:login_user'
 LOGIN_URL = 'accounts:login_user'
 
 django_heroku.settings(locals())
+
+SECURE_SSL_REDIRECT = True
