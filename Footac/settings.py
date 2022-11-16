@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = (os.environ.get('DEBUG_VALUE') == 'True')
 
 ALLOWED_HOSTS = ['footac.herokuapp.com', '127.0.0.1']
 
@@ -145,6 +145,3 @@ LOGOUT_REDIRECT_URL = 'accounts:login_user'
 
 LOGIN_URL = 'accounts:login_user'
 django_heroku.settings(locals())
-
-if os.getcwd() == '/app': # running online on heroku
-    DEBUG = False
