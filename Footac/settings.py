@@ -147,4 +147,4 @@ LOGIN_URL = 'accounts:login_user'
 django_heroku.settings(locals())
 
 if os.getcwd() == '/app': # running online on heroku
-    DEBUG = False
+    DEBUG = True
