@@ -147,4 +147,5 @@ LOGIN_URL = 'accounts:login_user'
 django_heroku.settings(locals())
 
 if os.getcwd() == '/app': # running online on heroku
-    SECURE_SSL_REDIRECT = False
+    SECURE_SSL_REDIRECT = True
+    DEBUG = False
