@@ -133,6 +133,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+STATICFILES_STORAGE = '.storage.WhiteNoiseStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -143,7 +144,6 @@ LOGIN_REDIRECT_URL = 'actions:home'
 LOGOUT_REDIRECT_URL = 'accounts:login_user'
 
 LOGIN_URL = 'accounts:login_user'
-
 django_heroku.settings(locals())
 
 if os.getcwd() == '/app': # running online on heroku
