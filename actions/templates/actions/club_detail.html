@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load custom_tags %}
 
 {% block title %}{{ club.name }}{% endblock %}
 
@@ -12,10 +13,11 @@
                 <div class="card mb-4">
                     <div class="card-body text-center">
                         {% if club.logo %}
-                            <img src="/static/img/logos/{{ club.logo }}" alt="logo_id_1"
+                            {% get_image_path 'img/logos/' club.logo as path %}
+                            <img src="{% static path %}" alt="club_logo"
                                  class="rounded-circle img-fluid" style="width: 150px;">
                         {% else %}
-                            <img src="{% static 'img/footac/Footac_logo_small.png' %}" alt="logo_id_1"
+                            <img src="{% static 'img/footac/Footac_logo_small.png' %}" alt="footac_logo"
                                  class="rounded-circle img-fluid" style="width: 150px;">
                         {% endif %}
                         <h3 class="my-3">{{ club.name }}</h3>
