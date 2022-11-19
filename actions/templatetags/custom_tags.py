@@ -1,4 +1,5 @@
 from django import template
+from django.db.models import ImageField
 
 register = template.Library()
 
@@ -51,3 +52,8 @@ def update_url(value, key, urlencode=None):
         url = f'{url}&{encoded_querystring}'
 
     return url
+
+
+@register.simple_tag
+def get_image_path(dirname: str, file: ImageField) -> str:
+    return dirname + str(file)
