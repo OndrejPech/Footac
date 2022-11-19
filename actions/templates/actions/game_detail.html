@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load custom_tags %}
 
 {% block title %}Detail zápasu{% endblock %}
 
@@ -10,8 +11,11 @@
             <div class="row">
                 <div class="col-3">
                     <div class="card border-0">
-                        <img src="/static/img/logos/{{ game.home_team.club.logo }}" class="card-img-top"
+                        {% if game.home_team.club.logo %}
+                            {% get_image_path 'img/logos/' game.home_team.club.logo as path %}
+                        <img src="{% static path %}" class="card-img-top"
                              alt="home_team_logo">
+                        {% endif %}
                     </div>
                 </div>
                 <div class="col-6">
@@ -46,8 +50,11 @@
                 </div>
                 <div class="col-3">
                     <div class="card border-0">
-                        <img src="/static/img/logos/{{ game.away_team.club.logo }}" class="card-img-top"
-                             alt="away_team_logo"/>
+                        {% if game.away_team.club.logo %}
+                            {% get_image_path 'img/logos/' game.away_team.club.logo as path %}
+                        <img src="{% static path %}" class="card-img-top"
+                             alt="away_team_logo">
+                        {% endif %}
                     </div>
                 </div>
             </div>
