@@ -1,3 +1,4 @@
+from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect, reverse
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib import messages
@@ -16,7 +17,13 @@ def login_user(request):
         if user is not None:
             login(request, user)
             messages.success(request, 'Jste přihlášen/a.')
-            return redirect('actions:home')
+            try:
+                club = request.user.account.club
+            except ObjectDoesNotExist:  # No club associated with user
+                messages.info(request, 'Váš účet není propojen s žádným klubem, prosím kontaktujte správce serveru.')
+                return redirect('actions:home')
+            return redirect('actions:club_detail', club.id)
+
         else:
             messages.success(request, 'Přihlášení se nezdařilo.')
             return redirect('accounts:login_user')
