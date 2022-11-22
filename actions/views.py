@@ -34,7 +34,7 @@ def team_actions_view(request, team_id):
     try:
         club = request.user.account.club
     except ObjectDoesNotExist:  # No club associated with user,
-        return render(request, template_name='actions/no_club_account.html')
+        return render(request, template_name='actions/restricted_access.html')
     club_teams_id = list(club.teams.all().values_list('id', flat=True))
     if team_id not in club_teams_id:  # user is not allowed to see this team
         return render(request, template_name='actions/restricted_access.html')
@@ -68,7 +68,7 @@ def edit_action_view(request, action_id):
     try:
         club = request.user.account.club
     except ObjectDoesNotExist:  # No club associated with user,
-        return render(request, template_name='actions/no_club_account.html')
+        return render(request, template_name='actions/restricted_access.html')
     club_teams_id = set(club.teams.all().values_list('id', flat=True))
 
     action = get_object_or_404(Action, id=action_id)
