@@ -140,8 +140,7 @@ STATICFILES_STORAGE = '.storage.WhiteNoiseStaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = 'actions:home'
-LOGOUT_REDIRECT_URL = 'accounts:login_user'
+LOGIN_REDIRECT_URL = 'actions:club_detail'
 
 LOGIN_URL = 'accounts:login_user'
 django_heroku.settings(locals())

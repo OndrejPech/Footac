@@ -28,7 +28,7 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     messages.success(request, 'Odhlášení proběhlo úspěšně.')
-    return redirect('actions:home')
+    return redirect('accounts:login_user')
 
 
 def register_user(request):
